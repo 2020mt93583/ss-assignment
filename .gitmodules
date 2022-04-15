@@ -1,0 +1,9 @@
+[submodule "users-service"]
+	path = users-service
+	url = https://github.com/2020mt93583/users-service.git
+[submodule "orders-service"]
+	path = orders-service
+	url = https://github.com/2020mt93583/orders-service.git
+[submodule "inventory-service"]
+	path = inventory-service
+	url = https://github.com/2020mt93583/inventory-service.git
