@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service-deployment
+  labels:
+    app: inv-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inv-service
+  template:
+    metadata:
+      labels:
+        app: inv-service
+    spec:
+      containers:
+      - name: inventory-service-pod
+        image: inventory-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: inventory-db-name
+          value: "172.17.0.5"
+        - name: inventory-db-pass
+          value: ""
+        - name: eventq-host-name
+          value: "172.17.0.5"
+        - name: eventq-pass
+          value: ""
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-service-deployment
+  labels:
+    app: users-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-service
+  template:
+    metadata:
+      labels:
+        app: users-service
+    spec:
+      containers:
+      - name: users-service-pod
+        image: users-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: users-db-name
+          value: "172.17.0.5"
+        - name: users-db-pass
+          value: ""
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-service-deployment
+  labels:
+    app: orders-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders-service
+  template:
+    metadata:
+      labels:
+        app: orders-service
+    spec:
+      containers:
+      - name: orders-service-pod
+        image: orders-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: orders-db-name
+          value: "172.17.0.5"
+        - name: orders-db-pass
+          value: ""
+        - name: eventq-host-name
+          value: "172.17.0.5"
+        - name: eventq-pass
+          value: ""
+        - name: inventory-service-url
+          value: "inventory-service"
+        - name: users-service-url
+          value: "users-service"
+
+
